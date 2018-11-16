@@ -1,12 +1,14 @@
 \section{Traffic User Equilibrium as a Differential Game}
 
-In this section we lay the groundwork for reasoning about traffic equilibrium. We can rephrase \eqref{eqn:ui-vi} in first order logic in \eqref{eqn:ui-vi:fol}. For brevity let $\Omega = \Omega_d \cap \Omega_s$ denote the feasible set of traffic flows.
+In this section we lay the groundwork for reasoning about traffic equilibrium. 
+We can rephrase \eqref{eqn:ui-vi} in first order logic in \eqref{eqn:ui-vi:fol}.
+For brevity let $\Omega = \Omega_d \cap \Omega_s$ denote the feasible set of traffic flows.
 
 \begin{align}
     \exists \mathbf{y}\in \Omega \forall \mathbf{z}\in \Omega (\mathbf{t}(\mathbf{y})(\mathbf{z}- \mathbf{y}) &\geq 0) \label{eqn:ui-vi:fol}
 \end{align}
 
-If we can express $\mathbf{t}(\mathbf{y})(\mathbf{z}- \mathbf{y})$ as the prime of some term $F$ then we leverage the differential game invariant rule (DGI) introduced in \citet{DBLP:journals/tocl/Platzer17}. Here we present a special case of DGI.
+If we can express $\mathbf{t}(\mathbf{y})(\mathbf{z}- \mathbf{y})$ as the prime of some term $F$ in the context of some differential $x'=f(x,\mathbf{y},\mathbf{z})$ then we leverage the differential game invariant proof rule (DGI) introduced in \citet{DBLP:journals/tocl/Platzer17}. Here we present a special case of DGI.
 
 \begin{prooftree}
     \AxiomC{$\exists y\in Y \forall z\in Z [x'\assigned f(x,y,z)](F' \geq 0)$}
@@ -14,6 +16,11 @@ If we can express $\mathbf{t}(\mathbf{y})(\mathbf{z}- \mathbf{y})$ as the prime 
     \UnaryInfC{$F\geq 0 \implies [x'=f(x,y,z) \& y \in Y^d \& z\in Z] (F\geq 0)$}
 \end{prooftree}
 
-In this setting, we can interpret traffic equilibrium as a game where Demon proposes a traffic flow $\mathbf{y}$. This flow induces a travel cost across each link in the network. Angel tries to propose an alternate traffic flow $\mathbf{z}$ which, using Demons link costs $\mathbf{t}(\mathbf{y})$, results in a lower total cost in the network.
+In this setting, 
+
+
+%we can interpret traffic equilibrium as a differential game in which Demon proposes a traffic flow $\mathbf{y}$. This flow induces a travel cost across each link in the network, represented by $\mathbf{t}(\mathbf{y})$. Angel tries to propose an alternate traffic flow $\mathbf{z}$ which, using Demons link costs $\mathbf{t}(\mathbf{y})$, results in a lower total cost in the network.
+
+
 
 What remains is to find a meaningful interpretation for $x$ (and by extension $x'$) which leads to $F' = \mathbf{t}(\mathbf{y})(\mathbf{z}- \mathbf{y})$.

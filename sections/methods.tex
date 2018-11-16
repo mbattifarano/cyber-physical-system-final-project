@@ -12,13 +12,17 @@ We may now represent the set of demand-feasible and supply-feasible link flows.
     \Omega_s &= \{\mathbf{x} \in \mathbb{R}_+^m \mid x_i \leq c_i \text{ for all } i=1,\cdots, m \} \label{eqn:supply-feasible-link-flow}
 \end{align}
 
-The user equilibrium condition introduced by \citet{wardrop1952some} can be expressed succinctly as a \textit{variational inequality} \citep{smith1979existence,dafermos1980traffic,nagurney2009netecon}. We say that $\mathbf{x^*}\in\Omega_d\cap \Omega_s$ is an equilibrium link flow if \eqref{eqn:ui-vi} holds.
+The user equilibrium condition introduced by \citet{wardrop1952some} can be expressed succinctly as a \textit{variational inequality} \citep{smith1979existence,dafermos1980traffic,nagurney2009netecon}.
+We say that $\mathbf{x^*}\in\Omega_d\cap \Omega_s$ is an equilibrium link flow if \eqref{eqn:ui-vi} holds.
 
 \begin{align}
     \mathbf{t}(\mathbf{x^*})(\mathbf{x}- \mathbf{x^*}) &\geq 0,\ \text{for all}\ \mathbf{x} \in \Omega_d\cap \Omega_s \label{eqn:ui-vi}
 \end{align}
 
-The network design problem additionally introduces a network control system which implicitly modifies the network cost. Let $Y\subseteq \mathbb{R}^k$ denote the domain of the control parameters. The link cost $\mathbf{t}$ now additionally depends on the control parameters. Let $g:\mathbb{R}^k\times \mathbb{R}^m\to \mathbb{R}$ be a network performance function which depends jointly on the state of the network and on the control parameters. We express the network design problem as a mathematical program with equilibrium constraints in \eqref{eqn:ndp-mpec}.
+The network design problem additionally introduces a network control system which implicitly modifies the network cost.
+Let $Y\subseteq \mathbb{R}^k$ denote the domain of the control parameters. The link cost $\mathbf{t}$ now additionally depends on the control parameters.
+Let $g:\mathbb{R}^k\times \mathbb{R}^m\to \mathbb{R}$ be a network performance function which depends jointly on the state of the network and on the control parameters.
+We express the network design problem as a mathematical program with equilibrium constraints in \eqref{eqn:ndp-mpec}.
 
 \begin{subequations}
 \begin{align}
@@ -29,13 +33,23 @@ The network design problem additionally introduces a network control system whic
 \end{align}\label{eqn:ndp-mpec}
 \end{subequations}
 
-A classical example of a network design problem is presented in \citet{sheffi1983optimal}. The timing of traffic signals in the network is controlled with the intent of minimizing the total delay in the network. What makes this problem difficult is that changes to the signal timing changes the travel costs of the links which changes the equilibrium traffic flow which determines the total delay.
+A classical example of a network design problem is presented in \citet{sheffi1983optimal}.
+The timing of traffic signals in the network is controlled with the intent of minimizing the total delay in the network.
+What makes this problem difficult is that changes to the signal timing changes the travel costs of the links which changes the equilibrium traffic flow which determines the total delay.
 
-This project will model this interaction between the network control system and the equilibrium traffic flow as a differential hybrid game. The central component of the model is the travel cost which will be expressed as a part of a differential equation to which the control system and vehicle fleet jointly provide input. The network performance function will serve as the \textit{terminal payoff} function. Concretely, this will involve the following steps,
+This project will model this interaction between the network control system and the equilibrium traffic flow as a differential hybrid game.
+The central component of the model is the travel cost which will be expressed as a part of a differential equation to which the control system and vehicle fleet jointly provide input.
+The network performance function will serve as the \textit{terminal payoff} function.
+Concretely, this will involve the following steps,
 
 \begin{enumerate}
-    \item Formulate the network design problem on the Braess Network\footnote{The Braess Network \citep{frank1981braess} is the smallest network to exhibit the Braess Paradox: in which \textit{removing} a link \textit{reduces} total congestion under user equilibrium traffic flow. In other words, the user equilibrium flow on this network is provably not the system optimal flow.} as a differential hybrid game where the ``angel'' role is played by the traffic control system and the ``demon'' role is played by the vehicle fleet. To simplify matters we suppose that the traffic control system is able to charge a toll to vehicles for use of the roadway.
-    \item Introduce the network performance function as the \textit{terminal payoff}. In this case the control system aims to reduce congestion in the network.
+    \item Formulate the network design problem on the Braess Network
+    \footnote{The Braess Network \citep{frank1981braess} is the smallest network to exhibit the Braess Paradox: in which \textit{removing} a link \textit{reduces} total congestion under user equilibrium traffic flow.
+    In other words, the user equilibrium flow on this network is provably not the system optimal flow.}
+    as a differential hybrid game where the ``angel'' role is played by the traffic control system and the ``demon'' role is played by the vehicle fleet.
+    To simplify matters we suppose that the traffic control system is able to charge a toll to vehicles for use of the roadway.
+    \item Introduce the network performance function as the \textit{terminal payoff}.
+    In this case the control system aims to reduce congestion in the network.
     \item Prove that the traffic control system has a winning strategy to reduce total congestion.
     \item Develop component-based verification for network at equilibrium analogous to \citet{DBLP:conf/itsc/MullerMP15}.
 \end{enumerate}

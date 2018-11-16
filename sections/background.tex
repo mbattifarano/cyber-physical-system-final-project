@@ -1,9 +1,24 @@
 \section{Background}
 
-The traffic network equilibrium problem has been extensively studied in the transportation literature. Equilibrium conditions were first characterized by \citet{wardrop1952some} who defined two behavioral principles later termed \textit{user equilibrium} (UE) and \textit{system optimum} (SO). This project will deal exclusively with user equilibrium which refers to the traffic flow state on the network in which no single user can reduce their travel time by changing route. \citet{smith1979existence} and \citet{dafermos1980traffic} then formulated the user equilibrium as a \textit{variational inequality problem} (VIP), which has become the prevailing formulation used in the literature \citep{nagurney2009netecon}. Of additional interest is the alternative fixed-point formulation introduced by \citet{smith1979existence}.
+The traffic network equilibrium problem has been extensively studied in the transportation literature.
+Equilibrium conditions were first characterized by \citet{wardrop1952some} who defined two behavioral principles later termed \textit{user equilibrium} (UE) and \textit{system optimum} (SO).
+This project will deal exclusively with user equilibrium which refers to the traffic flow state on the network in which no single user can reduce their travel time by changing route.
+\citet{smith1979existence} and \citet{dafermos1980traffic} then formulated the user equilibrium as a \textit{variational inequality problem} (VIP), which has become the prevailing formulation used in the literature \citep{nagurney2009netecon}.
+Of additional interest is the alternative fixed-point formulation introduced by \citet{smith1979existence}.
 
-Network equilibrium is also utilized as a constraint in many network design problems (NDP) \citep{sheffi1983optimal}. NDPs of this nature are formulated as mathematical programs with equilibrium  constraints (MPEC) \citep{luo1996mathematical}. Because the equilibrium constraint is a variational inequality problem, it is non-convex and non-differentiable. Iterative algorithms which approximate the gradient through the VIP exist but are computationally expensive \citep{josefsson2007sensitivity}. Developing efficient (approximate) solution algorithms for MPECs remains an area of active research. A logical treatment of network design problems would aim to verify properties of the network at equilibrium \textit{without} explicitly computing the equilibrium state. 
+Network equilibrium is also utilized as a constraint in many network design problems (NDP) \citep{sheffi1983optimal}.
+NDPs of this nature are formulated as mathematical programs with equilibrium  constraints (MPEC) \citep{luo1996mathematical}.
+Because the equilibrium constraint is a variational inequality problem, it is non-convex and non-differentiable.
+Iterative algorithms which approximate the gradient through the VIP exist but are computationally expensive \citep{josefsson2007sensitivity}.
+Developing efficient (approximate) solution algorithms for MPECs remains an area of active research.
+A logical treatment of network design problems would aim to verify properties of the network at equilibrium \textit{without} explicitly computing the equilibrium state. 
 
-Formal methods have been successfully applied to verify safety in several traffic control systems. \citet{DBLP:conf/fm/LoosPN11} prove collision-freedom in cars equipped with local adaptive cruise control. \citet{DBLP:conf/itsc/LoosP11} design and verify a smart traffic light system at an intersection.  \citet{DBLP:conf/iccps/MitschLP12} model variable speed limits applied to portions of the roadway and prove conditions on model parameters that guarantee safety. Of particular importance to this project is the safety verification of traffic networks presented by \citet{DBLP:conf/itsc/MullerMP15} which enables verification of arbitrary networks by decomposition into separable components subject to contracts on their flow inputs and outputs. 
+Formal methods have been successfully applied to verify safety in several traffic control systems.
+\citet{DBLP:conf/fm/LoosPN11} prove collision-freedom in cars equipped with local adaptive cruise control.
+\citet{DBLP:conf/itsc/LoosP11} design and verify a smart traffic light system at an intersection.
+\citet{DBLP:conf/iccps/MitschLP12} model variable speed limits applied to portions of the roadway and prove conditions on model parameters that guarantee safety.
+Of particular importance to this project is the safety verification of traffic networks presented by \citet{DBLP:conf/itsc/MullerMP15} which enables verification of arbitrary networks by decomposition into separable components subject to contracts on their flow inputs and outputs. 
 
-Formal methods have also been developed to describe adversarial dynamics within a hybrid system. Hybrid Games \citep{Platzer13:dGL} describe hybrid systems in which choices in the hybrid system are made by one of two players each of whom aims to reach complementary and mutually exclusive ``winning'' conditions. Differential Hybrid Games \citep{DBLP:journals/tocl/Platzer17} extend hybrid games to include differential equations in which each players provides their own input control.
+Formal methods have also been developed to describe adversarial dynamics within a hybrid system.
+Hybrid Games \citep{Platzer13:dGL} describe hybrid systems in which choices in the hybrid system are made by one of two players each of whom aims to reach complementary and mutually exclusive ``winning'' conditions.
+Differential Hybrid Games \citep{DBLP:journals/tocl/Platzer17} extend hybrid games to include differential equations in which each players provides their own input control.

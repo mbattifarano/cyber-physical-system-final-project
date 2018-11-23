@@ -1,23 +1,63 @@
 \section{Methods}
 
-Loosely following \citet{smith1979existence} we formulate the traffic assignment problem as follows. Let $G=(N,L)$ represent a directed graph with $N$ denoting the set of nodes with $n$ members and $L$ the set of links with $m$ members. We denote each link as $a_i\in L$ for $i=1,\cdots,m$ and the traffic flow across each link as $x_i$ for $i=1,\cdots,m$. We collect the link flows in a vector $\mathbf{x}=(x_1,\cdots, x_m)\in\mathbb{R}_+^m$. Similarly we define a vector of link capacities, $\mathbf{c}=(c_1, \cdots, c_m)\in \mathbb{R}_+^m$. Let $Q\subseteq N\times N$ denote the set of origin-destination pairs on the network with $d$ members. Denote by $q_i$ the travel demand between each origin-destination pair for $i=1,\cdots,d$. We collect the demand as a vector $\mathbf{q}=(1_1, \cdots, q_d)\in\mathbb{R}_+^d$. 
+Loosely following \citet{smith1979existence} we formulate the traffic assignment problem as follows.
+Let $G=(N,L)$ represent a directed graph with $N$ denoting the set of nodes with $n$ members and $L$ the set of links with $m$ members.
+We denote each link as $a_i\in L$ for $i=1,\cdots,m$ and the traffic flow across each link as $x_i$ for $i=1,\cdots,m$.
+We collect the link flows in a vector $\mathbf{x}=(x_1,\cdots, x_m)\in\mathbb{R}_+^m$. 
+Similarly we define a vector of link capacities, $\mathbf{c}=(c_1, \cdots, c_m)\in \mathbb{R}_+^m$.
+Let $Q\subseteq N\times N$ denote the set of origin-destination pairs on the network with $d$ members.
+Denote by $q_i$ the travel demand between each origin-destination pair for $i=1,\cdots,d$.
+We collect the demand as a vector $\mathbf{q}=(1_1, \cdots, q_d)\in\mathbb{R}_+^d$. 
 
-We may enumerate all (directed) paths in the network as a set $P$ with $p$ members. Define $M \in \{0, 1\}^{d\times p}$ be a binary matrix representing the trip-path incidence relation: $M_{ij} = 1$ if the $j$-th path in $P$ connects the origin-destination pair $q_i$ and equals $0$ otherwise. Similarly, define $D\in \{0, 1\}^{p\times m}$ as a binary matrix representing the link-path incidence relation: $D_{ij}=1$ if link $a_j$ is on the $i$-th path of $P$ and equals $0$ otherwise. The product $MD \in \{0, 1\}^{d \times m}$ is therefore the link-trip incidence matrix.
+We may enumerate all (directed) paths in the network as a set $P$ with $p$ members.
+Define $M \in \{0, 1\}^{d\times p}$ be a binary matrix representing the trip-path incidence relation: $M_{ij} = 1$ if the $j$-th path in $P$ connects the origin-destination pair $q_i$ and equals $0$ otherwise.
+Similarly, define $D\in \{0, 1\}^{p\times m}$ as a binary matrix representing the link-path incidence relation: $D_{ij}=1$ if link $a_j$ is on the $i$-th path of $P$ and equals $0$ otherwise.
 
-Finally, we introduce the link cost function $\mathbf{t}: \mathbb{R}_+^m \to \mathbb{R}_+^m$ which reports the travel cost of each link as a function of the link flows. We denote the cost of a single link $a_i$ as $t_i(\mathbf{x})$.
-
+A link flow $\mathbf{x}\in \mathbb{R}_+^m$ is said to be \textit{supply-feasible} if the link flow on each link does not exceed the capacity of the link.
+A link flow is said to be \textit{demand-feasible} if is corresponds to a demand-feasible path-flow.
+A path flow $\mathbf{F} \in \mathbb{R}_+^p$ is said to be demand-feasible if $M\mathbf{F}=\mathbf{q}$.
+In other words, $\mathbf{F}$ is demand-feasible if for each origin-destination pair, $q_i$ the sum of the flow over all paths connecting $q_i$ is equal to the travel demand for $q_i$.
+The link flow $\mathbf{x}$ corresponds to a path flow $\mathbf{F}$ if $\mathbf{x} = D^T\mathbf{F}$.
 We may now represent the set of demand-feasible and supply-feasible link flows.
+
 \begin{align}
-    \Omega_d &= \{\mathbf{x} \in \mathbb{R}_+^m \mid MD\mathbf{x}= \mathbf{q}\}\label{eqn:demand-feasible-link-flow}\\
-    \Omega_s &= \{\mathbf{x} \in \mathbb{R}_+^m \mid x_i \leq c_i \text{ for all } i=1,\cdots, m \} \label{eqn:supply-feasible-link-flow}
+    \Omega_d &= \{\mathbf{x} \in \mathbb{R}_+^m \mid M\mathbf{F}= \mathbf{q} \land D^T\mathbf{F} = \mathbf{x}\}\label{eqn:demand-feasible-link-flow}\\
+    \Omega_s &= \{\mathbf{x} \in \mathbb{R}_+^m \mid \mathbf{x} \preceq \mathbf{c} \} \label{eqn:supply-feasible-link-flow}
 \end{align}
+
+Finally, we introduce the link cost function $\mathbf{t}: \Omega_s \to \mathbb{R}_+^m$ which reports the travel cost of each link as a function of the link flows.
+We denote the cost of a single link $a_i$ as $t_i(\mathbf{x})$.
 
 The user equilibrium condition introduced by \citet{wardrop1952some} can be expressed succinctly as a \textit{variational inequality} \citep{smith1979existence,dafermos1980traffic,nagurney2009netecon}.
 We say that $\mathbf{x^*}\in\Omega_d\cap \Omega_s$ is an equilibrium link flow if \eqref{eqn:ui-vi} holds.
 
-\begin{align}
-    \mathbf{t}(\mathbf{x^*})(\mathbf{x}- \mathbf{x^*}) &\geq 0,\ \text{for all}\ \mathbf{x} \in \Omega_d\cap \Omega_s \label{eqn:ui-vi}
-\end{align}
+\begin{theorem}[Variational Inequality Formulation]
+    \label{thm:ui-vi}
+    A link flow pattern $\mathbf{x}^* \in \Omega$ is a traffic network equilibrium link flow if and only if it satisfies the following variational inequality problem:
+    \begin{align}
+        \mathbf{t}(\mathbf{x^*})(\mathbf{x}- \mathbf{x^*}) &\geq 0,\ \text{for all}\ \mathbf{x} \in \Omega_d\cap \Omega_s \label{eqn:ui-vi}
+    \end{align}
+\end{theorem}
+
+\begin{theorem}[Existence]
+\label{thm:existence}
+    There exists a Wardrop equilibrium $\mathbf{x}^* \in \Omega_d \cap \Omega_s$ if the following conditions are met.
+    \begin{enumerate}
+        \item The link cost function $\mathbf{t}: \Omega_s \to \mathbb{R}_+^m$ is continuous.\label{exists-condition:link-cost-continuous}
+        \item The demand-feasible set of link flows $\Omega_d$ is closed and convex.\label{exists-condtions:demand-convex}
+        \item Every demand-feasible link flow is also supply feasible: $\Omega_d \subseteq \Omega_s$. \label{exists-condtion:demand-supply-feasible}
+    \end{enumerate}
+\end{theorem}
+
+The proof of \cref{thm:existence} is given in \citet{smith1979existence}.
+Of the conditions on uniqueness that \cref{thm:existence} requires, only one is non-trivial.
+Condition \ref{exists-condition:link-cost-continuous} is very mild and not unreasonable in practice.
+The demand-feasible set as defined in \eqref{eqn:demand-feasible-link-flow} meets condition \ref{exists-condtions:demand-convex} since it is defined by a set of linear constraints.
+Condition \ref{exists-condtion:demand-supply-feasible}, as Smith notes, is rather strong.
+This condition arises from the use of the Browuer fixed-point theorem, which states that every continuous mapping from a non-empty convex and compact set into itself has a fixed point.
+In short, the proof leverages a continuous mapping  $T: \Omega_d\cap \Omega_s \to \Omega_d$ so in order to apply the theorem, $\Omega_d$ needs to be a subset of $\Omega_s$.
+Besides, $\mathbf{t}$ is not defined outside of $\Omega_s$.
+There are alternate existence theorems that relax this constraint but for simplicity we will use this one.
 
 The network design problem additionally introduces a network control system which implicitly modifies the network cost.
 Let $Y\subseteq \mathbb{R}^k$ denote the domain of the control parameters. The link cost $\mathbf{t}$ now additionally depends on the control parameters.
@@ -37,19 +77,21 @@ A classical example of a network design problem is presented in \citet{sheffi198
 The timing of traffic signals in the network is controlled with the intent of minimizing the total delay in the network.
 What makes this problem difficult is that changes to the signal timing changes the travel costs of the links which changes the equilibrium traffic flow which determines the total delay.
 
-This project will model this interaction between the network control system and the equilibrium traffic flow as a differential hybrid game.
-The central component of the model is the travel cost which will be expressed as a part of a differential equation to which the control system and vehicle fleet jointly provide input.
-The network performance function will serve as the \textit{terminal payoff} function.
-Concretely, this will involve the following steps,
 
-\begin{enumerate}
-    \item Formulate the network design problem on the Braess Network
-    \footnote{The Braess Network \citep{frank1981braess} is the smallest network to exhibit the Braess Paradox: in which \textit{removing} a link \textit{reduces} total congestion under user equilibrium traffic flow.
-    In other words, the user equilibrium flow on this network is provably not the system optimal flow.}
-    as a differential hybrid game where the ``angel'' role is played by the traffic control system and the ``demon'' role is played by the vehicle fleet.
-    To simplify matters we suppose that the traffic control system is able to charge a toll to vehicles for use of the roadway.
-    \item Introduce the network performance function as the \textit{terminal payoff}.
-    In this case the control system aims to reduce congestion in the network.
-    \item Prove that the traffic control system has a winning strategy to reduce total congestion.
-    \item Develop component-based verification for network at equilibrium analogous to \citet{DBLP:conf/itsc/MullerMP15}.
-\end{enumerate}
+
+%This project will model this interaction between the network control system and the equilibrium traffic flow as a differential hybrid game.
+%The central component of the model is the travel cost which will be expressed as a part of a differential equation to which the control system and vehicle fleet jointly provide input.
+%The network performance function will serve as the \textit{terminal payoff} function.
+%Concretely, this will involve the following steps,
+%
+%\begin{enumerate}
+%    \item Formulate the network design problem on the Braess Network
+%    \footnote{The Braess Network \citep{frank1981braess} is the smallest network to exhibit the Braess Paradox: in which \textit{removing} a link \textit{reduces} total congestion under user equilibrium traffic flow.
+%    In other words, the user equilibrium flow on this network is provably not the system optimal flow.}
+%    as a differential hybrid game where the ``angel'' role is played by the traffic control system and the ``demon'' role is played by the vehicle fleet.
+%    To simplify matters we suppose that the traffic control system is able to charge a toll to vehicles for use of the roadway.
+%    \item Introduce the network performance function as the \textit{terminal payoff}.
+%    In this case the control system aims to reduce congestion in the network.
+%    \item Prove that the traffic control system has a winning strategy to reduce total congestion.
+%    \item Develop component-based verification for network at equilibrium analogous to \citet{DBLP:conf/itsc/MullerMP15}.
+%\end{enumerate}

@@ -6,12 +6,16 @@ This project will deal exclusively with user equilibrium which refers to the tra
 \citet{smith1979existence} and \citet{dafermos1980traffic} then formulated the user equilibrium as a \textit{variational inequality problem} (VIP), which has become the prevailing formulation used in the literature \citep{nagurney2009netecon}.
 Of additional interest is the alternative fixed-point formulation introduced by \citet{smith1979existence}.
 
+Both \citet{smith1979existence} and \citet{dafermos1980traffic} formulate the \textit{static traffic assignment} problem in which the demand for travel on the network is fixed, i.e. not time-dependent.
+Correspondingly, the flow on the network is not time-dependent.
+This is to be contrasted with the \textit{dynamic traffic assignment} problem in which travel demand on the network, and necessarily link flow, is a function of time. 
+
 Network equilibrium is also utilized as a constraint in many network design problems (NDP) \citep{sheffi1983optimal}.
 NDPs of this nature are formulated as mathematical programs with equilibrium  constraints (MPEC) \citep{luo1996mathematical}.
 Because the equilibrium constraint is a variational inequality problem, it is non-convex and non-differentiable.
 Iterative algorithms which approximate the gradient through the VIP exist but are computationally expensive \citep{josefsson2007sensitivity}.
 Developing efficient (approximate) solution algorithms for MPECs remains an area of active research.
-A logical treatment of network design problems would aim to verify properties of the network at equilibrium \textit{without} explicitly computing the equilibrium state. 
+A logical treatment of network design problems would aim to verify properties of the network at equilibrium \textit{without} explicitly computing the equilibrium state.\\
 
 Formal methods have been successfully applied to verify safety in several traffic control systems.
 \citet{DBLP:conf/fm/LoosPN11} prove collision-freedom in cars equipped with local adaptive cruise control.
@@ -21,4 +25,4 @@ Of particular importance to this project is the safety verification of traffic n
 
 Formal methods have also been developed to describe adversarial dynamics within a hybrid system.
 Hybrid Games \citep{Platzer13:dGL} describe hybrid systems in which choices in the hybrid system are made by one of two players each of whom aims to reach complementary and mutually exclusive ``winning'' conditions.
-Differential Hybrid Games \citep{DBLP:journals/tocl/Platzer17} extend hybrid games to include differential equations in which each players provides their own input control.
+Differential Hybrid Games \citep{DBLP:journals/tocl/Platzer17} extend hybrid games to include differential equations to which each players provides their own input control.

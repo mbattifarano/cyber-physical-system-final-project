@@ -1,0 +1,47 @@
+\section{Next Steps}
+
+In this section I outline the next steps for the project.
+One thing I am still thinking about from the white paper feedback is viewing the problem from the perspective of an inf/sup condition on differential game values.
+I'll continue to think about this and hopefully work it in to one of the following more concrete tasks I have listed below.
+
+\subsection{Further consideration of equilibrium dynamics}
+
+This section will further elaborate on the route choice adjustment process \eqref{eqn:project-dynamical-system}.
+The dynamical system established has limited practical use on its own: it simply describes an algorithm for (eventually) finding an equilibrium given any feasible link flow.
+However, in the context of optimal control or a differential game it has a reasonable practical interpretation: that of a reaction to a change in link costs. 
+In practice, a change in toll price or traffic signal timing has an immediate effect on travel cost but a delayed effect on traveller route choice.
+In addition to the question of which control input is optimal (or simply good enough) a traffic controller might want to know if the traffic flow will pass through any undesirable states on its way to the new equilibrium.
+This interpretation will be explored more fully.\\
+
+With equilibrium dynamics established we may now introduce control inputs to the link cost function.
+
+\subsection{Single player control}
+
+Suppose a traffic controller is able to influence the link cost function, for example, by applying a toll to one or more links.
+Here we are interested in examining the dynamical system governed by \eqref{eqn:single-player-dynamics}. 
+
+\begin{align}
+    \mathbf{x}' &= \Pi_{\Omega} (\mathbf{x}, -\mathbf{t}(\mathbf{y}, \mathbf{x}))\label{eqn:single-player-dynamics}
+\end{align}
+
+This is a trivial differential game in the sense that the dynamics do not additionally depend on a second players control.
+It is typically analyzed in the setting of optimal control theory. \citep{bardi2008optimal}
+
+In this section appropriate conditions on $\mathbf{t}$ and the control input $\mathbf{y}$ will be developed so that \crefrange{thm:correspondence}{thm:convergence} hold.
+Additionally, the simple case in which the control input is constant will be examined as it can be readily expressed as a hybrid system.
+Suitability of this formulation to applications will then be discussed.
+
+\subsection{Two-player game}
+
+As before, suppose a traffic controller is able to influence the link cost function.
+Further suppose that there is an unknown disturbance in the network which has the effect of changing the link cost function, for example, a felled tree, or a malfunctioning traffic signal.
+Here we are interested in examining the differential game given by \eqref{eqn:two-player-dynamics}.
+
+\begin{align}
+    \mathbf{x}' &= \Pi_{\Omega} (\mathbf{x}, -\mathbf{t}(\mathbf{y}, \mathbf{z}, \mathbf{x}))\label{eqn:two-player-dynamics}
+\end{align}
+
+This problem is an example of optimal control in the presence of an unknown disturbance, a well-established class of problems that are formulated as differential games. \citep{bardi2008optimal}
+In this section, as in the previous, appropriate conditions on $\mathbf{t}$ and the control inputs $\mathbf{y}$ and $\mathbf{z}$ will be developed so that \crefrange{thm:correspondence}{thm:convergence} hold.
+The upper and lower values of this game will be defined and examined.
+Finally, the suitability of this formulation to applications will be discussed.

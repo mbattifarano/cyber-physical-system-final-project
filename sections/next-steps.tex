@@ -15,21 +15,6 @@ This interpretation will be explored more fully.\\
 
 With equilibrium dynamics established we may now introduce control inputs to the link cost function.
 
-\subsection{Single player control}
-
-Suppose a traffic controller is able to influence the link cost function, for example, by applying a toll to one or more links.
-Here we are interested in examining the dynamical system governed by \eqref{eqn:single-player-dynamics}. 
-
-\begin{align}
-    \mathbf{x}' &= \Pi_{\Omega} (\mathbf{x}, -\mathbf{t}(\mathbf{y}, \mathbf{x}))\label{eqn:single-player-dynamics}
-\end{align}
-
-This is a trivial differential game in the sense that the dynamics do not additionally depend on a second players control.
-It is typically analyzed in the setting of optimal control theory. \citep{bardi2008optimal}
-
-In this section appropriate conditions on $\mathbf{t}$ and the control input $\mathbf{y}$ will be developed so that \crefrange{thm:correspondence}{thm:convergence} hold.
-Additionally, the simple case in which the control input is constant will be examined as it can be readily expressed as a hybrid system.
-Suitability of this formulation to applications will then be discussed.
 
 \subsection{Two-player game}
 

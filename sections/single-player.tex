@@ -1,0 +1,98 @@
+\section{Single-Player Control}
+
+Suppose a traffic controller is able to influence the link cost function, for example, by applying a toll to one or more links.
+Here we are interested in examining the dynamical system governed by \eqref{eqn:single-player-dynamics}. 
+
+\begin{align}
+    \mathbf{x}' &= \Pi_{\Omega} (\mathbf{x}, -\mathbf{t}(\mathbf{y}, \mathbf{x}))\label{eqn:single-player-dynamics}
+\end{align}
+
+Where $\mathbf{y}$ is typically a function of the evolution ``time'' of the system.
+This is a trivial differential game in the sense that the dynamics do not additionally depend on a second players control.
+It is typically analyzed in the setting of optimal control theory. \citep{bardi2008optimal}
+
+In this section appropriate conditions on $\mathbf{t}$ and the control input $\mathbf{y}$ will be developed so that \crefrange{thm:correspondence}{thm:convergence} hold.
+
+To aid in our discussion, we say that traffic flow $\mathbf{x}$ is at equilibrium with respect to control parameters $\mathbf{y}$ if $\Pi_{\Omega} (\mathbf{x}, -\mathbf{t}(\mathbf{y}, \mathbf{x}))=0$.
+
+\subsection{Discrete case}
+
+In the discrete case, we are interested in showing that the dynamical system will converge to equilibrium after a discrete change to the control parameters.
+
+\begin{theorem}[Discrete control]
+Let $Y$ denote domain of control parameters and $\Omega^*_y$ denote the set of equilibria with respect to $y$. Let $\mathbf{t}: Y\times \Omega_s \to \mathbb{R}^m_+$ be strictly monotone increasing in $\mathbf{x}$ for any fixed $y\in Y$. The following is a valid formula.
+
+$$\mathbf{x} \in \Omega \implies \forall \epsilon > 0\  \mathbf{y}\assigned *;?(\mathbf{y}\in Y); \langle \mathbf{x}'=\Pi_{\Omega}(\mathbf{x}, -\mathbf{t}(\mathbf{y}, \mathbf{x}))\ \&\ \mathbf{x}\in \Omega\rangle (\exists \mathbf{x}^*\in \Omega^*_\mathbf{y}\ \|\mathbf{x} - \mathbf{x}^*\| \leq \epsilon)$$
+\end{theorem}
+
+\begin{proof}
+We proceed with the proof using sequent calculus.
+
+\begin{prooftree}
+    \AxiomC{*}
+    \LeftLabel{\Cref{thm:dl:convergence}}
+    \UnaryInfC{$\mathbf{x} \in \Omega, \mathbf{y}\in Y \vdash \forall \epsilon > 0\ \langle \mathbf{x}'=\Pi_{\Omega}(\mathbf{x}, -\mathbf{t}(\mathbf{y}, \mathbf{x}))\ \&\ \mathbf{x}\in \Omega\rangle (\exists \mathbf{x}^*\in \Omega^*_\mathbf{y}\ \|\mathbf{x} - \mathbf{x}^*\| \leq \epsilon)$}
+    \UnaryInfC{$\mathbf{x} \in \Omega, \epsilon > 0, \mathbf{y}\in Y \vdash \langle \mathbf{x}'=\Pi_{\Omega}(\mathbf{x}, -\mathbf{t}(\mathbf{y}, \mathbf{x}))\ \&\ \mathbf{x}\in \Omega\rangle (\exists \mathbf{x}^*\in \Omega^*_\mathbf{y}\ \|\mathbf{x} - \mathbf{x}^*\| \leq \epsilon)$}
+    \UnaryInfC{$\mathbf{x} \in \Omega \implies \forall \epsilon > 0\  \mathbf{y}\assigned *;?(\mathbf{y}\in Y); \langle \mathbf{x}'=\Pi_{\Omega}(\mathbf{x}, -\mathbf{t}(\mathbf{y}, \mathbf{x}))\ \&\ \mathbf{x}\in \Omega\rangle (\exists \mathbf{x}^*\in \Omega^*_\mathbf{y}\ \|\mathbf{x} - \mathbf{x}^*\| \leq \epsilon)$}
+\end{prooftree}
+
+We may apply \cref{thm:dl:convergence} in the last step because $\mathbf{y}$ is fixed in the differential equation.
+As a result, $\mathbf{t}(\mathbf{y}, \mathbf{x}))$ may be re-written as a function of $\mathbf{x}$ alone, say $\mathbf{t}_y(\mathbf{x})$, which meets the precondition of \cref{thm:dl:convergence}.
+\end{proof}
+
+What if the system starts off at equilibrium?
+In this case we would like to show that a small change in control parameters results in a small change in equilibrium toward which the dynamics will evolve.
+
+\begin{theorem}
+\label{thm:di:eq-continuity}
+Let $Y$ denote domain of control parameters and $\Omega^*_y$ denote the set of equilibria with respect to $y$.
+Let $\mathbf{t}: Y\times \Omega_s \to \mathbb{R}^m_+$ be continuous and strictly monotone increasing in $\mathbf{x}$ for any fixed $y\in Y$.
+
+The following are valid formulae.
+
+\begin{align*}
+    \mathbf{x} \in \Omega^*_\mathbf{y} &\implies \forall \epsilon > 0\ \exists \delta >0\ \mathbf{y}\assigned \mathbf{y} + \delta;?(\mathbf{y}\in Y); [\mathbf{x}'=\Pi_{\Omega}(\mathbf{x}, -\mathbf{t}(\mathbf{y}, \mathbf{x}))\ \&\ \mathbf{x}\in \Omega] (\exists \mathbf{x}^*\in \Omega^*_\mathbf{y}\ \|\mathbf{x} - \mathbf{x}^*\| \leq \epsilon)\\
+    \mathbf{x} \in \Omega^*_\mathbf{y} &\implies \forall \epsilon > 0\ \forall \delta >0\ \mathbf{y}\assigned \mathbf{y} + \delta;?(\mathbf{y}\in Y); \langle\mathbf{x}'=\Pi_{\Omega}(\mathbf{x}, -\mathbf{t}(\mathbf{y}, \mathbf{x}))\ \&\ \mathbf{x}\in \Omega\rangle (\exists \mathbf{x}^*\in \Omega^*_\mathbf{y}\ \|\mathbf{x} - \mathbf{x}^*\| \leq \epsilon)
+\end{align*}
+
+\end{theorem}
+
+\subsection{Continuous control}
+
+Consider the case in which $\mathbf{t}$ is continuous in both the traffic flow $\mathbf{x}$ and control parameter $\mathbf{y}$.
+It would be nice if the continuity of $\mathbf{t}$ extended to some notion of continuity of the equilibrium state.
+In particular, suppose $\mathbf{x}$ is an equilibrium traffic flow with respect to $\mathbf{y}$.
+We then suppose that we follow the system of differential equations given by \eqref{eqn:single-player-diff-sys} for some $r\geq 0$.
+
+\begin{subequations}
+\begin{align}
+    \mathbf{x}' &= \Pi_{\Omega} (\mathbf{x}, -\mathbf{t}(\mathbf{y}, \mathbf{x}))\\
+    \mathbf{y}' &= f(\mathbf{y})
+\end{align}
+\label{eqn:single-player-diff-sys}
+\end{subequations}
+
+Where $f$ is some function definable in first order arithmetic.
+This is a slight re-phrasing of 
+Denote the value of $\mathbf{x}$ and $\mathbf{y}$ after running the system for duration $r$ by $\mathbf{x}^{(r)}$ and $\mathbf{y}^{(r)}$.
+One reasonable question arises: if $\mathbf{x}$ was an equilibrium with respect to $\mathbf{y}$ is $\mathbf{x}^{(r)}$ an equilibrium with respect to $\mathbf{y}^{(r)}$?
+
+Intuitively, we ought to be able to find conditions under which $\mathbf{x}^{(r)}$ is ``close'' to the equilibrium with respect to $\mathbf{y}^{(r)}$.
+Informally, we can think of this as a continuous version of the model in \cref{thm:di:eq-continuity}, again starting from an equilibrium traffic flow $x$.
+\begin{enumerate}
+    \item the control parameter $y$ is changed by some small about $\delta$
+    \item the traffic flow is no longer at equilibrium with respect to $y$, but by following the dynamics the link flow approaches the equilibrium with respect to (the updated) control parameter.
+\end{enumerate}
+In a loop, these two steps can be thought of as a chase of some kind: a discrete change is made to the control and then the traffic flow ``catches up`` to the new equilibrium.
+We would rightly worry that over many iterations the traffic state would stray arbitrarily far from the equilibrium unless the dynamics were allowed to run long enough.
+However, this scenario has a natural expression as a hybrid game in which one player (the traffic controller) sets $y$ and the number of iterations, while the other (the traffic) determines how long to run the differential.
+
+In the continuous control system \eqref{eqn:single-player-diff-sys} both the control parameters \textit{and} the link flows are changing smoothly and simultaneously. 
+We would therefore like to establish three facts:
+\begin{enumerate}
+    \item The link flow derivative is \textit{always} pointed toward the equilibrium with respect to the current value of $y$.
+    \item We may bound $f$ in such a way to ensure that if $x$ is initially an equilibrium, then the current value of $x$ will always remain close to equilibrium with respect to the current value for $y$.
+    \item We may bound $f$ in such a way to ensure that if $x$ is initially close to equilibrium with respect to $y$, then  it will always remain close to equilibrium with respect to $y$.
+    \item Are there any conditions on $f$ or $\mathbf{y}$ which cause the system to remain at equilibrium with respect to $\mathbf{y}$ as an invariant? I don't think so. Would this be possible if we added a second (adversarial) player who compensates for the changes to the control parameter?
+    \item Finally, is there an natural expression of the continuous system as a differential game?
+\end{enumerate}

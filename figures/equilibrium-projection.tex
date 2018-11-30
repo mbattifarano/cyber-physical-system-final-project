@@ -1,0 +1,23 @@
+\begin{tikzpicture}
+    \coordinate (origin) at (0, 0);
+    
+    \coordinate (vertical extent) at (0, 6);
+    \coordinate (horizontal extent) at (6, 0);
+    
+    % axes
+    \draw 
+        (origin) -- (vertical extent)
+        (origin) -- (horizontal extent)
+    ;
+    
+    % supply-feasible region
+    \draw (5, 0) arc (0:90:5cm) node[below right] {$\Omega_s$};
+    % demand-feasible region
+    \begin{scope}[shift={(3.5, 3.5)}]
+        \draw [rotate=-45] (0, 0) ellipse (3cm and 2cm) node [below right=2cm] {$\Omega_d$}; 
+    \end{scope}
+    
+    % cost lines
+    \draw 
+    
+\end{tikzpicture}

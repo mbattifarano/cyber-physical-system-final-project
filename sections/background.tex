@@ -1,8 +1,19 @@
 \section{Background}
 
 The traffic network equilibrium problem has been extensively studied in the transportation literature.
-Equilibrium conditions were first characterized by \citet{wardrop1952some} who defined two behavioral principles later termed \textit{user equilibrium} (UE) and \textit{system optimum} (SO).
-This project will deal exclusively with user equilibrium which refers to the traffic flow state on the network in which no single user can reduce their travel time by changing route.
+Equilibrium conditions were first characterized by \citet{wardrop1952some} who defined the following two route choice criteria.
+
+\begin{enumerate}
+    \item The journey times on all the paths actually used are equal, and less than those which would be experienced by a single vehicle on any unused route.
+    \item The average journey time is a minimum.
+\end{enumerate}
+
+When traffic flow is distributed on the network according to the first criterion, no driver has a less costly alternative route.
+As a result it is known as the \textit{user equilibrium} (UE) traffic distribution, because it requires no coordination between agents to achieve or maintain.
+When traffic flow is distributed on the network according to the second criterion, there is no less costly alternative traffic distribution, but it may be possible for a single driver to find a less costly route at the expense of the system.
+Because the second criterion requires the coordination of drivers is known as the \textit{system optimum} (SO).
+
+This project will deal exclusively with user equilibrium as it is a more realistic model of driver route-choice behavior.
 \citet{smith1979existence} and \citet{dafermos1980traffic} then formulated the user equilibrium as a \textit{variational inequality problem} (VIP), which has become the prevailing formulation used in the literature \citep{nagurney2009netecon}.
 Of additional interest is the alternative fixed-point formulation introduced by \citet{smith1979existence}.
 
@@ -21,7 +32,7 @@ Formal methods have been successfully applied to verify safety in several traffi
 \citet{DBLP:conf/fm/LoosPN11} prove collision-freedom in cars equipped with local adaptive cruise control.
 \citet{DBLP:conf/itsc/LoosP11} design and verify a smart traffic light system at an intersection.
 \citet{DBLP:conf/iccps/MitschLP12} model variable speed limits applied to portions of the roadway and prove conditions on model parameters that guarantee safety.
-Of particular importance to this project is the safety verification of traffic networks presented by \citet{DBLP:conf/itsc/MullerMP15} which enables verification of arbitrary networks by decomposition into separable components subject to contracts on their flow inputs and outputs. 
+Of particular importance to this project is the safety verification of traffic networks presented by \citet{DBLP:conf/itsc/MullerMP15} which enables verification of link properties (for example, that flow does not exceed capacity) of arbitrary networks by decomposition into separable components subject to contracts on their flow inputs and outputs. 
 
 Formal methods have also been developed to describe adversarial dynamics within a hybrid system.
 Hybrid Games \citep{Platzer13:dGL} describe hybrid systems in which choices in the hybrid system are made by one of two players each of whom aims to reach complementary and mutually exclusive ``winning'' conditions.

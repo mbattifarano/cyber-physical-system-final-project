@@ -2,8 +2,12 @@
 
 The variational inequality formulation of the traffic equilibrium condition is a static condition.
 Of particular interest in re-framing traffic equilibrium in the logic of differential hybrid games is to identify a dynamical system which not only preserves traffic equilibrium as an invariant but pushes a non-equilibrium state toward equilibrium.
+We can develop a dynamical system from the decision process from the motivating example in \cref{sec:motivating-example}.
+Let $\mathbf{x}$ denote yesterday's link flow.
+When choosing today's routes, the drivers wish to pick a feasible link flow $\mathbf{\tilde{x}}$ which reduces travel costs.
+One way to achieve this is to simply move $\mathbf{x}$ in the direction that reduces its link costs by some step size $\alpha \geq 0$, i.e. $\mathbf{x}-\alpha \mathbf{t}(\mathbf{x})$, and then project it back onto the feasible set to ensure that the resulting link flow remains feasible.
 
-\citet{nagurney1997projected} introduce a \textit{Projected Dynamical System} formulation of traffic equilibrium given by \eqref{eqn:project-dynamical-system}.
+\citet{nagurney1997projected} introduce a \textit{Projected Dynamical System} formulation of traffic equilibrium given by \eqref{eqn:project-dynamical-system} which extends the discrete decision process to a continuous one.
 
 \begin{align}
     \mathbf{x}' &= \Pi_{\Omega}(\mathbf{x}, -\mathbf{t}(\mathbf{x}))\label{eqn:project-dynamical-system}\\
@@ -19,11 +23,26 @@ It's important to note that solutions of \eqref{eqn:project-dynamical-system} ar
 The main result presented in \citet{nagurney1997projected} is to show that one my discretize \eqref{eqn:project-dynamical-system} to produce an algorithm which converges on the true solution.
 In this setting, we may think of this system as representing, somewhat counter-intuitively, the long term evolution of traffic flow.
 
-As a thought experiment consider the morning commute.
-This is an oft-used application of the static traffic assignment problem because in this setting the assumption that travel demand is constant is not so unbelievable: commuters tend to leave the same house at the same time headed toward the same place as they did the morning before.
-On day $i$ the commuters choose their routes, $\mathbf{x}_{i}$, based on the link costs from the day before, $\mathbf{t}(\mathbf{x}_{i-1})$.
-If they can perturb their route to achieve a lower travel time \textit{based on yesterday's link costs}, they do.
-What results is exactly a route choice $\mathbf{x}_i = P_{\Omega}(\mathbf{x}_{i-1}-\varepsilon \mathbf{t}(\mathbf{x}_{i-1}))$ for some $\varepsilon \geq 0$.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.4\textwidth]{figures/equilibrium-projection.png}
+    %\input{figures/equilibrium-projection.tex}
+    \caption{Visual depiction of the dynamical system in \eqref{eqn:project-dynamical-system}. Here, $D\cap S$ represents the feasible region $\Omega$, $u(\cdot) = -t(\cdot)$ and $Tf$ is the projection of $f+u(f)$ onto $\Omega$. The vector field represents $u$. The flow $h$ is an equilibrium. We see that the equilibrium flow $h$ is a fixed point of $T$ whereas the $T$ applied to some non-equilibrium point $f$, is not a fixed point ($Tf \neq f$) and nudges the system toward equilibrium. The operator $\Pi_{\Omega}$ can be considered the infinitesimal version of the operator $T$ in the diagram.}
+    \label{fig:equilibrium-projection}
+\end{figure}
+
+As a succinct visual aid of this process, consider \cref{fig:equilibrium-projection} re-printed here from  \citet{smith1979existence}. 
+Lets consider how the route choice adjustment process acts on an arbitrary feasible link flow $x$ in \cref{fig:equilibrium-projection}.
+Suppose $x$ is in the interior of $D\cap S$.
+In this case, $x'$ is simply $-t$ and the link flow will evolve toward the boundary.
+Upon reaching the boundary, $x$ can no longer move in the direction of $-t$ and remain in the feasible set.
+The dynamics ensure this through use of the projection operator.
+As a result, $x$ evolves in the direction most closely aligned with $-t$ that still points in the direction of $\Omega$.
+The link flow will then move along the boundary, approaching the equilibrium point $h$.  
+At the equilibrium point we see that $\Pi_{\omega}(h, -t(h))=0$ since $P_{\Omega}(h- \varepsilon t(h)) = h$ for all $\varepsilon \geq 0$.\\
+
+We have so far used $\Pi_\Omega$ to succinctly represent a somewhat complicated mathematical operation. We will now show that we are justified in using it in differenital dynamic logic.
+
 
 We repeat three important theorems proved in \citet{nagurney1997projected}.
 
@@ -51,24 +70,15 @@ We repeat three important theorems proved in \citet{nagurney1997projected}.
     The route choice adjustment process is \textit{asymptotically stable} if the link cost $t$ is strictly monotone increasing in the link flow.
 \end{theorem}
 
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=0.4\textwidth]{figures/equilibrium-projection.png}
-    \caption{Visual depiction of the dynamical system in \eqref{eqn:project-dynamical-system}. Here, $D\cap S$ represents the feasible region $\Omega$, $u(\cdot) = -t(\cdot)$ and $Tf$ is the projection of $f+u(f)$ onto $\Omega$. The vector field represents $u$. The flow $h$ is an equilibrium. We see that the equilibrium flow $h$ is a fixed point of $T$ whereas the $T$ applied to some non-equilibrium point $f$, is not a fixed point ($Tf \neq f$) and nudges the system toward equilibrium. The operator $\Pi_{\Omega}$ can be considered the infinitesimal version of the operator $T$ in the diagram.}
-    \label{fig:equilibrium-projection}
-\end{figure}
+\begin{theorem}
+The dynamics given by \eqref{eqn:project-dynamical-system} can be specified in differential dynamic logic provided that $\mathbf{t}$ can be expressed in differential dynamic logic.
+\end{theorem}
 
-As a succinct visual aid of this process, consider \cref{fig:equilibrium-projection} re-printed here from  \citet{smith1979existence}. 
-Lets consider how the route choice adjustment process acts on an arbitrary feasible link flow $x$ in \cref{fig:equilibrium-projection}.
-Suppose $x$ is in the interior of $D\cap S$.
-In this case, $x'$ is simply $-t$ and the link flow will evolve toward the boundary.
-Upon reaching the boundary, $x$ can no longer move in the direction of $-t$ and remain in the feasible set.
-The dynamics ensure this through use of the projection operator.
-As a result, $x$ evolves in the direction most closely aligned with $-t$ that still points in the direction of $\Omega$.
-The link flow will then move along the boundary, approaching the equilibrium point $h$.  
-At the equilibrium point we see that $\Pi_{\omega}(h, -t(h))=0$ since $P_{\Omega}(h- \varepsilon t(h)) = h$ for all $\varepsilon \geq 0$.
+\begin{proof}
+    TODO
+\end{proof}
 
-From \cref{thm:correspondence} we see that $P \equiv \forall \mathbf{\tilde{x}} \in \Omega (\mathbf{t}(\mathbf{x})(\mathbf{\tilde{x}}- \mathbf{x}) \geq 0)$ is an invariant of the route choice adjustment process \eqref{eqn:project-dynamical-system}.
+From \cref{thm:correspondence} we may prove that the equilibrium condition $P \equiv \forall \mathbf{\tilde{x}} \in \Omega (\mathbf{t}(\mathbf{x})(\mathbf{\tilde{x}}- \mathbf{x}) \geq 0)$ is an invariant of the route choice adjustment process \eqref{eqn:project-dynamical-system}.
 Moreover, \cref{thm:convergence} guarantees that following the route adjustment process will get us closer to equilibrium, or at least never lead us further from equilibrium.
 Concretely, these two facts can be expressed in differential dynamic logic as follows.
 
@@ -80,13 +90,14 @@ Concretely, these two facts can be expressed in differential dynamic logic as fo
 \begin{proof}
     By \eqref{eqn:ui-vi}, the pre-condition implies that $\mathbf{x}$ is an equilibrium point.
     By \cref{thm:correspondence}, we have that since $\mathbf{x}$ is an equilibrium point,  $\Pi_{\Omega}(\mathbf{x}, -\mathbf{t}(\mathbf{x})) = 0$.
-    Therefore, $\mathbf{x}'=0$ and $\mathbf{x}$ will remain unchanged so the post-condition is true.
+    Therefore, $\mathbf{x}'=0$ initially. Because $\mathbf{x}'$ depends on $\mathbf{x}$ only, $\mathbf{x}$ will remain unchanged forever so the post-condition is true.
 \end{proof}
 
 \begin{theorem}
+    \label{thm:dl:convergence}
     Let $\Omega^*$ denote the set of equilibria.
     If $\mathbf{t}: \Omega_s \to \mathbb{R}^m_+$ is strictly monotone increasing then the following is a valid formula.
-    $$\epsilon > 0\land \mathbf{x} \in \Omega \implies \langle \mathbf{x}'=\Pi_{\Omega}(\mathbf{x}, -\mathbf{t}(\mathbf{x}))\ \&\ \mathbf{x}\in \Omega\rangle (\exists \mathbf{x}^*\in \Omega^*\ \|\mathbf{x} - \mathbf{x}^*\| \leq \epsilon)$$
+    $$\mathbf{x} \in \Omega \implies \exists \mathbf{x}^*\in \Omega^* \forall \epsilon > 0\ \langle \mathbf{x}'=\Pi_{\Omega}(\mathbf{x}, -\mathbf{t}(\mathbf{x}))\ \&\ \mathbf{x}\in \Omega\rangle ( \|\mathbf{x} - \mathbf{x}^*\| \leq \epsilon)$$
 \end{theorem}
 
 \begin{proof}

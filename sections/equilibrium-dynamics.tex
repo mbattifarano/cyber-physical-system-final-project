@@ -62,23 +62,61 @@ We repeat three important theorems proved in \citet{nagurney1997projected}.
 \end{theorem}
 
 \begin{definition}[Asymptotic Stability]
-     The route choice adjustment process given by \eqref{eqn:project-dynamical-system} is \textbf{asymptotically stable} if it is stable and, for any initial flow pattern $\mathbf{x}_0\in \Omega$ there exists some  equilibrium flow pattern $\mathbf{x}^*$ such that $\mathbf{x}_0(s) \to \mathbf{x}^*$ as $s\to \infty$.
+     The route choice adjustment process given by~\eqref{eqn:project-dynamical-system} is \textbf{asymptotically stable} if it is stable and, for any initial flow pattern $\mathbf{x}_0\in \Omega$ there exists some  equilibrium flow pattern $\mathbf{x}^*$ such that $\mathbf{x}_0(s) \to \mathbf{x}^*$ as $s\to \infty$.
 \end{definition}
 
-\begin{theorem}
-    \label{thm:convergence}
+\begin{theorem}\label{thm:convergence}
     The route choice adjustment process is \textit{asymptotically stable} if the link cost $t$ is strictly monotone increasing in the link flow.
 \end{theorem}
 
+\begin{lemma}
+	The path-flow feasibility conditions can be expressed in differential dynamic logic.
+\end{lemma}
+
+\begin{proof}
+As before, let $\mathbf{q}=(q_1, \ldots, q_d)$ denote the non-negative demand between each origin-destination pair on the network and let $M$ and $D$ denote the trip-path indicence matrix and link-path indicence matrix respectively.
+$\mathbf{q}$ is given as an input to the traffic assignment problem and $M$  and $D$ are derived from the network topology, so we may regard these as objects as fixed.
+
+Let $\mathbf{F}=(F_1,\ldots, F_p)$ denote a path flow.
+From the definition of path demand feasibility the vector product $M\mathbf{F}$ must equal the demand vector $\mathbf{q}$.
+We may express this in first order logic as
+\begin{align}
+	\land_{i\in Q} & q_i = \sum_{j\in P} M_{ij}F_j
+	\intertext{Moreover, each path flow must be non-negative.}
+	\land_{j\in P} & 0\leq F_j
+	\intertext{Lastly, the link flow induced by the path flow must be less than the capacity.}
+	\land_{k\in L} & \sum_{j \in P} D_{kj}F_j \leq c_i
+\end{align}
+
+\end{proof}
+
+\begin{lemma}
+	The link-flow feasibility conditions can be expressed in differential dynamic logic.
+\end{lemma}
+
+\begin{proof}
+	\begin{align}
+		\Land_{i\in L} & (0\leq x_i \land x_i \leq c_i)\\
+		\exists F_1 \geq 0 \exists F_2 \geq 0 \cdots \exists F_p \geq 0 ( (\Land_{i\in Q} & q_i = \sum_{j\in P} M_{ij}F_j) \land (\Land_{k\in L}   x_k = \sum_{j \in P} D_{kj}F_j) )
+	\end{align}
+\end{proof}
+
 \begin{theorem}
-The dynamics given by \eqref{eqn:project-dynamical-system} can be specified in differential dynamic logic provided that $\mathbf{t}$ can be expressed in differential dynamic logic.
+The dynamics given by~\eqref{eqn:project-dynamical-system} can be specified in differential dynamic logic provided that $\mathbf{t}$ can be expressed in differential dynamic logic.
 \end{theorem}
 
 \begin{proof}
-    TODO
+	First, we show that the interior of the feasibility set is expressible in dL.
+	This is straightforward: replace inequalities with strict inequalities.
+	Then the differential can be split into interior and boundary.
+	First interior: $\{x'=-t(x) \& x\in \Omega\}$.
+	Next we show that the boundary $B=\overline{\Omega}\setminus \Omega$, can be expressed in dL.
+	This is also straightforward: $\mathbf{F} \in B$ iff at least one path flow is equal to the demand or at least one link flow is equal to the capacity.
+	Finally, we find a closed form expression for projection onto $B$.
+	This should be relatively straightforward becuase everything is linear.
 \end{proof}
 
-From \cref{thm:correspondence} we may prove that the equilibrium condition $P \equiv \forall \mathbf{\tilde{x}} \in \Omega (\mathbf{t}(\mathbf{x})(\mathbf{\tilde{x}}- \mathbf{x}) \geq 0)$ is an invariant of the route choice adjustment process \eqref{eqn:project-dynamical-system}.
+From \cref{thm:correspondence} we may prove that the equilibrium condition $P \equiv \forall \mathbf{\tilde{x}} \in \Omega (\mathbf{t}(\mathbf{x})(\mathbf{\tilde{x}}- \mathbf{x}) \geq 0)$ is an invariant of the route choice adjustment process~\eqref{eqn:project-dynamical-system}.
 Moreover, \cref{thm:convergence} guarantees that following the route adjustment process will get us closer to equilibrium, or at least never lead us further from equilibrium.
 Concretely, these two facts can be expressed in differential dynamic logic as follows.
 
@@ -102,7 +140,7 @@ Concretely, these two facts can be expressed in differential dynamic logic as fo
 
 \begin{proof}
     Let $\mathbf{x}_0 \in \Omega$. Let $\mathbf{x}_0(s)$ denote the state of $\mathbf{x}_0$ after running the dynamics for duration $s\geq 0$.
-    Note that by construction, the dynamics ensure that if $\mathbf{x}$ is in $\Omega$ initially then $\mathbf{x}$ will remain in $\Omega$ after running the dynamics for any duration, i.e. the domain constraint is always satisfied.
+    Note that by construction, the dynamics ensure that if $\mathbf{x}$ is in $\Omega$ initially then $\mathbf{x}$ will remain in $\Omega$ after running the dynamics for any duration, i.e.\ the domain constraint is always satisfied.
     By \cref{thm:convergence}, for every $\epsilon > 0$ there exists real number $N$ such that if $s > N$ then $\|\mathbf{x}_0(s) - \mathbf{x}\| \leq \epsilon$. 
     Concretely, we may take any $r > N$.
     Then $\mathbf{x}_0(r) \in \Omega$ and $\mathbf{x}_0(s) \in \Omega$ for all $0 \leq s \leq r$.

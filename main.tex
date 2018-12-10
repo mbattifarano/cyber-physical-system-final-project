@@ -2,14 +2,22 @@
 \usepackage{assignment-style}
 \usepackage{cps}
 
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\rhead{\includegraphics[width=0.35in]{figures/mbattifa-logo.png}}
+\cfoot{\thepage}
+
 \title{%
+    \includegraphics[width=1in]{figures/mbattifa-logo.png}\\
     Formal Verification of Traffic Networks at Equilibrium\\
-    \large 15-624 Final Project Proposal\vspace{-1ex}}
+    \large 15-624 Final Project\vspace{-1ex}}
 \author{Matt Battifarano\\
         mbattifa@andrew.cmu.edu\vspace{-1ex}}
 
 \begin{document}
 \maketitle
+
 
 % \tableofcontents
 
@@ -19,10 +27,13 @@
 \input{sections/methods.tex}
 %\input{sections/challenges.tex}
 %\input{sections/equilibrium-game.tex}
-%\input{sections/ndp-game-concepts.tex}
 \input{sections/equilibrium-dynamics.tex}
 \input{sections/single-player.tex}
-\input{sections/next-steps.tex}
+\input{sections/appendix.tex}
+\input{sections/discussion.tex}
+%\input{sections/next-steps.tex}
+
+
 \input{sections/references.tex}
 
 \end{document}

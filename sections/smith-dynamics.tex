@@ -1,0 +1,49 @@
+\subsection{Path swap dynamics}
+
+\citet{smith1984stability} introduces a dynamical system formulation of traffic equilibrium in terms of path flow.
+First, some notation. As above, $\mathbf{F}=(F_1, \cdots, F_p)$ is a vector of path flows.
+Define the relation over paths $i\sim j$ as true if and only if $i$ and $j$ join the same origin destination pair.
+Let $\mathbf{T}(\mathbf{F})=(T_1(\mathbf{F}), \cdots, T_p(\mathbf{F}))$ denote the path cost as a function of path flow.
+Finally, let $(\cdot)_+=\max\{0, \cdot\}$.
+We can rephrase Wardrop's equilibrium condition logically as $ i \sim j \land T_i(\mathbf{F}) > T_j(\mathbf{F}) \implies F_i = 0$ for all paths $i, j$.
+Equivalently, $\mathbf{F}$ is an equilibrium path flow if and only if whenever $i\sim j$ \eqref{eqn:ue:smith-condition} holds.
+
+\begin{align}
+    \Phi_{ij}(\mathbf{F}) \equiv F_i(T_i(\mathbf{F}) - T_j(\mathbf{F}))_+ &= 0\label{eqn:ue:smith-condition}
+\end{align}
+
+We note that $\Phi_{ij}(\mathbf{F}) \geq 0$ for all demand feasible path flows because $F_i\geq 0$ for all $i$.
+As a result, whenever $\mathbf{F}$ is not an equilibrium path flow $\Phi_{ij}(\mathbf{F}) > 0$.
+
+Intuitively, $\Phi_{ij}$ can be thought of as the rate at which drivers change routes from route $i$ to route $j$.
+Concretely suppose there are only two paths in the network, $i$ and $j$.
+Further suppose $T_i(\mathbf{F}) > T_j(\mathbf{F})$.
+Then drivers abandon route $i$ a rate of $\Phi_{ij}$ and clamor to route $j$ at a rate of $\Phi_{ij}$.
+In other words, $F_i' = -\Phi_{ij}(\mathbf{F})$ and $F_j' = \Phi_{ij}(\mathbf{F})$.
+
+To express the dynamical system in general we let $e_i\in \mathbb{R}^p$ denote the standard basis vector and define the ``swap'' vector $\Delta_{ij} = e_j - e_i$ if $i \sim j$ and $0$ otherwise.
+
+\begin{align}
+    \Delta T_{ij}(\mathbf{F}) &= -\mathbf{T}(\mathbf{F})\Delta_{ij} = T_i(\mathbf{F}) - T_j(\mathbf{F})\\
+    \intertext{Importantly, this implies the identity $\Delta T_{ij} = -\Delta T_{ji}$. In particular, we can express $\Phi_{ij}$ as,}
+    \Phi_{ij}(\mathbf{F}) &= F_i (\Delta T_{ij})_+\\
+    \intertext{Finally, the dynamics are given by \eqref{eqn:ue:smith-dynamics}.}
+    \mathbf{F}' &= \Phi(\mathbf{F}) \equiv \sum_{i, j\in P} \Phi_{ij}(\mathbf{F})\Delta_{ij} \label{eqn:ue:smith-dynamics}
+\end{align}
+
+The quantity $\Phi_{ij}$ can be thought of as the speed and $\Delta_{ij}$ the direction of $F$ under the influence of swapping higher cost routes for lower cost ones.
+
+We briefly repeat the main results from \citet{smith1984stability}.
+
+\begin{enumerate}
+    \item Solutions to the differential equation $F'=0$ are equilibrium traffic flows. Related, equilibria are preserved as an invariant of the dynamics.
+    \item Feasible non-equilibrium traffic flows converge to equilibrium traffic flows under path swap dynamics.
+    \item Feasibility is preserved as an invariant under path swap dynamics.
+\end{enumerate}
+
+\begin{remark}
+Importantly, the path swap dynamics in \eqref{eqn:ue:smith-condition} \textit{are} expressible in differential dynamic logic extended with the max function provided that the path flow function $T$ are expressible in differential dynamic logic.
+\end{remark}
+
+This fact follows transparently from \eqref{eqn:ue:smith-dynamics} which contains only additions, multiplications, and the max function. 
+

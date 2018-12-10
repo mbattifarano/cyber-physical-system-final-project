@@ -1,7 +1,11 @@
-\section{Dynamical Systems Formulation of Traffic Equilibrium}
+\section{Dynamical Systems Formulation of Traffic Equilibrium}\label{sec:equilibrium-dynamics}
+
+In this section two related dynamical systems formulations of traffic equilibrium are introduced.
+
+\subsection{Projected Dynamical Systems}
 
 The variational inequality formulation of the traffic equilibrium condition is a static condition.
-Of particular interest in re-framing traffic equilibrium in the logic of differential hybrid games is to identify a dynamical system which not only preserves traffic equilibrium as an invariant but pushes a non-equilibrium state toward equilibrium.
+Of particular interest in re-framing traffic equilibrium in the logic of hybrid systems is to identify a dynamical system which not only preserves traffic equilibrium as an invariant but pushes a non-equilibrium state toward equilibrium.
 We can develop a dynamical system from the decision process from the motivating example in \cref{sec:motivating-example}.
 Let $\mathbf{x}$ denote yesterday's link flow.
 When choosing today's routes, the drivers wish to pick a feasible link flow $\mathbf{\tilde{x}}$ which reduces travel costs.
@@ -19,7 +23,11 @@ One way to achieve this is to simply move $\mathbf{x}$ in the direction that red
 
 The operator $\Pi_{\Omega}$ can be thought of as a G\^{a}teaux directional derivative along the negative of the link cost of the norm projection onto $\Omega$, $P_{\Omega}$ for $x\in \Omega$.
 Under this model, link flows change in the feasible direction that offers the largest reduction in the users travel costs.
-It's important to note that solutions of \eqref{eqn:project-dynamical-system} are not functions of real time.
+The intuition behind this operator is that traffic volume should move from higher cost links to lower cost links.
+By moving in the direction of $-t(x)$ the traffic volume on high cost links is reduced faster than the volume on lower cost links.
+The net effect of the projection back onto the feasible set is then to move volume from higher cost links to lower cost links until the costs are equalized.
+
+It's important to note that solutions of \eqref{eqn:project-dynamical-system} are not functions of real time, but of some abstract decision space.
 The main result presented in \citet{nagurney1997projected} is to show that one my discretize \eqref{eqn:project-dynamical-system} to produce an algorithm which converges on the true solution.
 In this setting, we may think of this system as representing, somewhat counter-intuitively, the long term evolution of traffic flow.
 
@@ -40,9 +48,6 @@ The dynamics ensure this through use of the projection operator.
 As a result, $x$ evolves in the direction most closely aligned with $-t$ that still points in the direction of $\Omega$.
 The link flow will then move along the boundary, approaching the equilibrium point $h$.  
 At the equilibrium point we see that $\Pi_{\omega}(h, -t(h))=0$ since $P_{\Omega}(h- \varepsilon t(h)) = h$ for all $\varepsilon \geq 0$.\\
-
-We have so far used $\Pi_\Omega$ to succinctly represent a somewhat complicated mathematical operation. We will now show that we are justified in using it in differenital dynamic logic.
-
 
 We repeat three important theorems proved in \citet{nagurney1997projected}.
 
@@ -84,8 +89,6 @@ We may express this in first order logic as
 	\land_{i\in Q} & q_i = \sum_{j\in P} M_{ij}F_j
 	\intertext{Moreover, each path flow must be non-negative.}
 	\land_{j\in P} & 0\leq F_j
-	\intertext{Lastly, the link flow induced by the path flow must be less than the capacity.}
-	\land_{k\in L} & \sum_{j \in P} D_{kj}F_j \leq c_i
 \end{align}
 
 \end{proof}
@@ -96,25 +99,15 @@ We may express this in first order logic as
 
 \begin{proof}
 	\begin{align}
-		\Land_{i\in L} & (0\leq x_i \land x_i \leq c_i)\\
+		\Land_{i\in L} & (0\leq x_i)\\
 		\exists F_1 \geq 0 \exists F_2 \geq 0 \cdots \exists F_p \geq 0 ( (\Land_{i\in Q} & q_i = \sum_{j\in P} M_{ij}F_j) \land (\Land_{k\in L}   x_k = \sum_{j \in P} D_{kj}F_j) )
 	\end{align}
 \end{proof}
 
-\begin{theorem}
-The dynamics given by~\eqref{eqn:project-dynamical-system} can be specified in differential dynamic logic provided that $\mathbf{t}$ can be expressed in differential dynamic logic.
-\end{theorem}
-
-\begin{proof}
-	First, we show that the interior of the feasibility set is expressible in dL.
-	This is straightforward: replace inequalities with strict inequalities.
-	Then the differential can be split into interior and boundary.
-	First interior: $\{x'=-t(x) \& x\in \Omega\}$.
-	Next we show that the boundary $B=\overline{\Omega}\setminus \Omega$, can be expressed in dL.
-	This is also straightforward: $\mathbf{F} \in B$ iff at least one path flow is equal to the demand or at least one link flow is equal to the capacity.
-	Finally, we find a closed form expression for projection onto $B$.
-	This should be relatively straightforward becuase everything is linear.
-\end{proof}
+\begin{remark}
+    Although the constraint set is expressible in differential dynamic logic, the projected dynamic system is not.
+    The projection operator in this setting is equivalent to projection onto a simplex. This is not generally attainable in closed form. However, as a special case, there exists a closed form for projection onto the 2-simplex which we leverage in the worked example in \cref{sec:single-player-example}.
+\end{remark}
 
 From \cref{thm:correspondence} we may prove that the equilibrium condition $P \equiv \forall \mathbf{\tilde{x}} \in \Omega (\mathbf{t}(\mathbf{x})(\mathbf{\tilde{x}}- \mathbf{x}) \geq 0)$ is an invariant of the route choice adjustment process~\eqref{eqn:project-dynamical-system}.
 Moreover, \cref{thm:convergence} guarantees that following the route adjustment process will get us closer to equilibrium, or at least never lead us further from equilibrium.
@@ -146,3 +139,5 @@ Concretely, these two facts can be expressed in differential dynamic logic as fo
     Then $\mathbf{x}_0(r) \in \Omega$ and $\mathbf{x}_0(s) \in \Omega$ for all $0 \leq s \leq r$.
     Moreover, we have that there exists some $\mathbf{x}^*\in \Omega^*$  such that $\|\mathbf{x}_0(r) - \mathbf{x}^*\| \leq \epsilon$.
 \end{proof}
+
+\input{sections/smith-dynamics.tex}

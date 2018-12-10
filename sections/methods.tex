@@ -1,4 +1,4 @@
-\section{Methods}
+\section{Methods}\label{sec:methods}
 
 Loosely following \citet{smith1979existence} we formulate the traffic assignment problem as follows.
 Let $G=(N,L)$ represent a finite directed graph with $N$ denoting the set of nodes with $n$ members and $L$ the set of links with $m$ members.
@@ -12,7 +12,7 @@ Denote by $q_i$ the travel demand between each origin-destination pair for $i=1,
 We collect the demand as a vector $\mathbf{q}=(q_1, \cdots, q_d)\in\mathbb{R}_+^d$. 
 The goal of the traffic assignment problem is to allocate the volume of travel demand to links in the network such that all travellers reach their destination and Wardrop's first condition is met.
 
-Intuitively, however, the choice faced by drivers is in terms of paths through the network, not specific routes.
+Intuitively, however, the choice faced by drivers is in terms of paths through the network, not specific links.
 A \textit{path} in the network retains its graph-theoretic definition: an ordered sequence of directed links in the network which connect two nodes in the graph. 
 We may enumerate all (directed) paths in the network as a set $P$ and let $p=|P|$
 A \textit{path flow} is a vector $\mathbf{F}\in \mathbb{R}^p_+$ which represents the volume of traffic along each path in the network.

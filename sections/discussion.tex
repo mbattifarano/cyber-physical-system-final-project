@@ -1,0 +1,64 @@
+\section{Discussion and future work}\label{sec:discussion}
+
+This project explores the applicability of dL and methods inspired by some of its techniques to the problem of traffic network equilibrium and the network design problem with a single control variable. 
+In addition to a translation of previous work in this area into dL, a new system was analyzed in which the link cost function not only depends on the traffic flow, but also on an external control parameter that may change over time.
+This control parameter, as an example, might represent a toll or the timing of traffic signals.
+A new dynamical system was developed which if started in an equilibrium state with respect to the initial value of the control parameter remains in an equilibrium state after running the dynamics with respect to the \textit{current value} of $y$.
+One exciting application of this technique is a re-framing of network design problems from an mathematical program with equilibrium constraints (MPEC) to a mathematical program with PDE constraints (as in \citet{Biegler2003:pde-constraints} for example). 
+
+Despite the work done in this project there is a significant ways to go before any meaningful application.
+Here we list some limitations and caveats of this work done in this project.
+
+\subsection{The general case}
+
+The most conspicuous absence is the lack of a general framework for the ``adjusted'' dynamics presented in \cref{sec:single-player-example}. In particular, it is not immediately clear how to select $\gamma$ or otherwise encode the dependence on $y$ into the dynamics of $x$. Additionally, it is not clear how this formulation scales with network size, or if it is possible for it to accommodate multiple origin destination pairs on the network.
+
+Most of all, the example leverages the very special case where the projection could be specified in closed form.
+As a concrete next step it would be valuable to re-work \cref{sec:single-player-example} using the path swap dynamical system which is expressible in differential dynamic logic.
+
+\subsection{Application to network design problems}
+
+As previously noted, this formulation enables the constraint set of many network design problem to be phrased as the solution to a system of differential equations.
+From a conceptual perspective there is an intuitive appeal to this formulation.
+Suppose we can set control parameters in such a way that the equilibrium traffic flow is trivial, for example, by ensuring that all paths but one are prohibitively expensive.
+By following the adjusted link/path flow dynamics from this equilibrium, all non-trivial equilibria will found as $y$ moves in the parameter space.
+From the perspective of differential games, we might additionally consider an objective function as a value function which is measured as $y$ traverses the parameter space.
+Although it is not immediately clear that this is a computational advantage over existing methods, it bears resemblance to sensitivity analysis based solution algorithms as described in \citet{josefsson2007sensitivity}.
+This approach may offer a more principled methodology.
+
+\subsection{Interpretation of time in the dynamics}
+
+As noted previously, the ``time'' derivatives explored in this paper are not derivatives with respect to real time.
+Physically a car cannot decide in the middle of its journey to have taken a different route.
+Rather time in this context represents some abstract decision space on which agents are allowed to move smoothly.
+The canonical example of static traffic assignment, the morning commute, however, is inherently a discrete process: drivers decide \textit{today} based on what happened \textit{yesterday}. So there it is not immediately clear how to interpret the states through which the dynamics pass on their way from a non-equilibrium state to an equilibrium.
+
+\subsection{Dynamic traffic assignment}
+
+This project dealt exclusively with static traffic assignment in which the demand and the flows were not time-dependent.
+Dynamic traffic assignment, as the name suggests, deals with demand that changes over time. As a result, traffic flows are time-dependent.
+Dynamic traffic assignment is a significantly harder problem but a much more practical one.
+As a result, extending this formulation to handle dynamic traffic assignment would be quite useful.
+
+Wrapped up in this extension is the representation of more complicated cost functions. In this project we specify the costs analytically. In fact, if we hope to represent them in differential dynamic logic, they will have to be polynomial. Many complex features of traffic costs are naturally represented as differential equations themselves.
+Dynamic traffic assignment solvers rely on simulation to evaluate the travel cost of a particular path flow.
+Although hybrid systems are adept at handling differential equations, this formulation uses system evolution time to move through an abstract decision space. As a result it is not immediately obvious how to incorporate more complex traffic phenomena.
+
+\subsection{Two-player games}
+
+Although the user equilibrium has been extensively formulated in in game theoretic terms (c.f. \citet{jin2015tap-games}), I am not aware of it being phrased in the language of differential games.
+
+Although in this project the control parameter $y$ varies deterministically as the solution to a differential equation, it is also possible to formulate the interaction between the control and the traffic as a game.
+In particular, consider \eqref{eqn:appendix:single-player-dynamics} as a differential game.
+In this game, $y$, instead of being determined by differential equation, is controlled by one player, and the adjustment term, now called $z$, is controlled by the other.
+The $z$ player wishes to preserve equilibrium with respect to $y$ even as the first player seeks to change it.
+
+Another interesting extension of this formulation is the introduction of a third variable to the link cost function representing an unknown disruption on the network.
+Such a system could model, for example, a felled tree, a malfunctioning traffic signal, or emergency vehicles.
+Here we are interested in examining the differential game given by \eqref{eqn:two-player-dynamics}.
+
+\begin{align}
+    \mathbf{x}' &= \Pi_{\Omega} (\mathbf{x}, -\mathbf{t}(\mathbf{y}, \mathbf{z}, \mathbf{x}))\label{eqn:two-player-dynamics}
+\end{align}
+
+This problem is an example of optimal control in the presence of an unknown disturbance, a well-established class of problems that are formulated as differential games \citep{bardi2008optimal}.

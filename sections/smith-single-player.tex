@@ -1,0 +1,103 @@
+
+\subsection{Worked example}
+
+Concretely, let us apply the dynamical systems formulation to the Braess network previously introduced.
+First, let us compute the path cost functions from the link flow functions.
+The path costs are simply the sum of the link costs along the path and the link flows are simply the sum of the path flows that utilize that link.
+For clarity, the equations are first specified as a sum of link flows then simplified.
+Here we use subscripts $u$, $l$, and $z$ for the upper, lower, ans zig-zag paths respectively. 
+
+\begin{align}
+    T_u(\mathbf{F}) &= 10(F_1+F_2) + 50 + F_1 = 50 + 10F_2 + 11F_1\\
+    T_z(\mathbf{F}) &= 10(F_1+F_2) + 10 + F_2 + 10(F_2 + F_3) = 10 + 10 F_1 + 10F_3 21F_2 \\
+    T_l(\mathbf{F}) &= 50 + F_3 + 10 (F_2 + F_3) = 50 + 10F_2 + 11F_3
+\end{align}
+
+Then we can write the dynamics according to \eqref{eqn:ue:smith-dynamics}.
+
+\begin{align}
+    \mathbf{F}' = \Phi(\mathbf{F}) = 
+        \begin{pmatrix}
+           F_u'\\
+           F_z'\\
+           F_l'
+        \end{pmatrix} &=
+        \begin{pmatrix}
+            \Phi_{zu} - \Phi_{uz} + \Phi_{lu} - \Phi_{ul}\\
+            \Phi_{uz} - \Phi_{zu} + \Phi_{lz} - \Phi_{zl}\\
+            \Phi_{ul} - \Phi_{lu} + \Phi_{zl} - \Phi_{lz}\\
+        \end{pmatrix}
+\end{align}
+
+Where we omit the dependence of $\Phi_{ij}$ on $\mathbf{F}$ for notational clarity.
+We pause briefly to confirm out intuition about this system. 
+The first differential, $F_u'$, represents the change in flow on the upper path over time.
+The first half of the expression, $\Phi_{zu} - \Phi_{uz}$ represents the net movement of volume between the upper and zig zig paths and the second,  $\Phi_{zu} - \Phi_{uz}$ represents the net movement of volume between the upper and lower paths.
+In total, the flow on the upper path changes by the volume leaving the zig-zig (lower) path for the upper path minus the volume leaving the upper path for the zig-zag (lower) path. 
+
+We can concretely demonstrate a few desirable properties.
+
+\begin{enumerate}
+    \item $\Land_{i\in P} F_i \geq 0$ is an invariant of the dynamics.
+        
+        Proof by differential ghost separately for each $F_i$: $g' = \frac{1}{2}g \sum_{j\in P} (\Delta T_{ij})_+$.
+    \item $\sum_{i\in P} F_i = q$ is an invariant of the dynamics.
+    
+        Proof by differential invariant.
+    \item $\Phi(\mathbf{F}) = 0$ is an invariant of the dynamics.
+        
+        Proof by Remark in \citet{smith1984stability}. However, it is also relatively straight forward to show via differential invariant.
+    \item $\Phi(\mathbf{F}) \to 0$ as the dynamics run.
+    
+        Proof by the stability theorem in \citet{smith1984stability}.
+\end{enumerate}
+
+The first two properties demonstrate that feasibility is invariant with respect to the dynamics.
+The third states if the path flow is at equilibrium it remains at equilibrium for all time. Finally, the fourth states that the dynamics push a non-equilibrium state toward an equilibrium state.
+
+
+\section{Single Player Dynamics}
+
+Suppose a traffic controller is able to influence the link (path) cost functions, for example by applying a toll to one or more links.
+Here we are interested in the equilibrium with respect to the the value of the control parameter $y\in Y \subseteq \mathbb{R}$.
+For simplicity we assume that $Y$ is a closed interval in $\mathbb{R}$.
+First, the path cost functions are now additionally dependent on $y$: $\mathbf{T}(y, \mathbf{F}) = (T_1(y,\mathbf{F}), \cdots, T_p(y, \mathbf{F})$.
+Extending the notation from the previous section we have,
+
+\begin{align}
+    \Delta T_{ij}(y, \mathbf{F}) &= -\mathbf{T}(y, \mathbf{F})\Delta_{ij} = T_i(y, \mathbf{F}) - T_j(y, \mathbf{F})\\
+    \Phi_{ij}(y, \mathbf{F}) &= F_i(\Delta T_{ij}(y, \mathbf{F}))_+\\
+    \mathbf{F}' = \Phi(y, \mathbf{F}) &= \sum_{i,j \in P} \Phi_{ij}(y, \mathbf{F}) \Delta_{ij}
+\end{align}
+
+As before, a path flow $\mathbf{F}$ is an equilibrium path flow if and only if $\Phi(y, \mathbf{F}) = 0$.
+
+For any fixed value of $y$ the dynamics are uninteresting.
+All results from the previous section still hold.
+We want to understand the behavior of the system as $y$ changes over the evolution time of the dynamical system.
+There are two obvious ways to achieve this.
+One option is to express the system as a non-adversarial differential game typically analyzed in the setting of optimal control theory \citep{bardi2008optimal}.
+A second option is to express the changing value of $y$ as a differential, which is the approach we will take here.
+
+In particular we are interested in the system given by \eqref{eqn:ue:single-player-diff:1}.
+
+\begin{subequations}
+    \begin{align}
+        \mathbf{F}' &= \Phi(y, \mathbf{F})\\ 
+        y' &= h(y, \mathbf{F})
+    \end{align}\label{eqn:ue:single-player-diff:1}
+\end{subequations}
+
+subject to the evolution domain constrain that $y\in Y$.
+
+The first observation is that equilibria are not, in general, invariants of \eqref{eqn:ue:single-player-diff:1}.
+It is clear from the dependence on $y$ in $\Phi$ that any for any non-trivial choice of $h$ and $\mathbf{C}(\cdot, \mathbf{F})$, $\Phi(y, \mathbf{F})$ will stray from 0 as soon as the dynamics start to run.
+
+We would like instead to define a new function $\hat{\Phi}(y, \mathbf{F})$ which compensates for how $y$ is changing in order for $\Phi(y, \mathbf{F}) = 0$ to be an invariant. Concretely,
+
+\begin{subequations}
+    \begin{align}
+        \mathbf{F}' &= \hat{\Phi}(y, \mathbf{F})\\ 
+        y' &= h(y, \mathbf{F})
+    \end{align}\label{eqn:ue:single-player-diff:2}
+\end{subequations}

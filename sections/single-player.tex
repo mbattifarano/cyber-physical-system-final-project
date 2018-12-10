@@ -1,4 +1,4 @@
-\section{Single-Player Control}
+\section{Single-Player Control}\label{sec:single-player-control}
 
 Suppose a traffic controller is able to influence the link cost function, for example, by applying a toll to one or more links.
 Here we are interested in examining the dynamical system governed by \eqref{eqn:single-player-dynamics}. 
@@ -73,7 +73,6 @@ We then suppose that we follow the system of differential equations given by \eq
 \end{subequations}
 
 Where $f$ is some function definable in first order arithmetic.
-This is a slight re-phrasing of 
 Denote the value of $\mathbf{x}$ and $\mathbf{y}$ after running the system for duration $r$ by $\mathbf{x}^{(r)}$ and $\mathbf{y}^{(r)}$.
 One reasonable question arises: if $\mathbf{x}$ was an equilibrium with respect to $\mathbf{y}$ is $\mathbf{x}^{(r)}$ an equilibrium with respect to $\mathbf{y}^{(r)}$?
 
@@ -88,11 +87,5 @@ We would rightly worry that over many iterations the traffic state would stray a
 However, this scenario has a natural expression as a hybrid game in which one player (the traffic controller) sets $y$ and the number of iterations, while the other (the traffic) determines how long to run the differential.
 
 In the continuous control system \eqref{eqn:single-player-diff-sys} both the control parameters \textit{and} the link flows are changing smoothly and simultaneously. 
-We would therefore like to establish three facts:
-\begin{enumerate}
-    \item The link flow derivative is \textit{always} pointed toward the equilibrium with respect to the current value of $y$.
-    \item We may bound $f$ in such a way to ensure that if $x$ is initially an equilibrium, then the current value of $x$ will always remain close to equilibrium with respect to the current value for $y$.
-    \item We may bound $f$ in such a way to ensure that if $x$ is initially close to equilibrium with respect to $y$, then  it will always remain close to equilibrium with respect to $y$.
-    \item Are there any conditions on $f$ or $\mathbf{y}$ which cause the system to remain at equilibrium with respect to $\mathbf{y}$ as an invariant? I don't think so. Would this be possible if we added a second (adversarial) player who compensates for the changes to the control parameter?
-    \item Finally, is there an natural expression of the continuous system as a differential game?
-\end{enumerate}
+We would like to modify this system slightly in order to ensure that as $y$ changes, the traffic state is always moving toward equilibrium.
+In particular we would like to show that equilibrium with respect to $y$ is preserved as an invariant under the modified dynamics.

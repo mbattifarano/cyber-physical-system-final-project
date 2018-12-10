@@ -5,7 +5,26 @@ The travel cost along each link in the network is a function of the traffic volu
 
 Solving the traffic assignment problem is a critical to transportation planning because it can compute roadway usage given travel demand and some mild assumptions on traveller behavior.
 Often, planning applications take the form of a transportation network design problem (NDP) in which design parameters are optimized with traffic equilibrium as a constraint.
-For example, \citet{sheffi1983optimal} find the signal timings that minimize travel delay subject to the constraint that traffic is at equilibrium.
+The design parameters influence the cost function of the network.
+As a result, different values of the design parameters induce different equilibrium traffic flow on the network.
+For example, \citet{sheffi1983optimal} find the signal timings that minimize travel delay subject to the constraint that traffic is at equilibrium with respect to the cost induced by that signal timing.
 
-This project will frame the network design problem as a Differential Hybrid Game \citep{DBLP:journals/tocl/Platzer17} in order to verify properties of the network at equilibrium without explicitly computing the equilibrium traffic flow.
-% Additionally, the project will draw connections between the Differential Hybrid Game formulation and the Traffic Network verification presented in \citet{DBLP:conf/itsc/MullerMP15}.
+This project identifies a dynamical system for a very simple network over both traffic flow and the design parameter that characterizes the equilibria as the value of the design parameters changes.
+In particular this dynamical system 
+\begin{enumerate}
+    \item preserves as an invariant the equilibrium state as the design parameter smoothly changes, and 
+    \item is expressible in differential dynamic logic, the logic we have used in this course.
+\end{enumerate}
+
+This formulation lays the foundation for a new approach to solving NDPs by characterizing their constraint set in a novel manner.\\
+
+The remainder of this paper is organized as follows.
+\Cref{sec:background} defines traffic equilibrium and offers a brief overview of existing formulations and applications of traffic equilibrium.
+\Cref{sec:motivating-example} Briefly introduces the morning commute problem: the canonical motivating example for the \textit{static traffic assignment problem}.
+\Cref{sec:methods} introduces the notation used to formalize network equilibrium.
+\Cref{sec:equilibrium-dynamics} introduces two different dynamical systems formulations for network equilibrium.
+\Cref{sec:single-player-control} formulates the NDP problem in terms of projected dynamical systems, one of the two dynamical systems introduced in the previous section.
+\Cref{sec:single-player-example} introduces a concrete simple network and equilibrium-preserving dynamics. It is shown that these dynamics preserve equilibrium under a changing control parameter.
+Finally \cref{sec:discussion} reviews what has been done in this project as well as the limitations of this approach.
+Additionally, several avenues for further work are identified.
+
